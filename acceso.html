@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+        table {
+            margin-top: 30px;
+            border-collapse: collapse;
+            width: 60%;
+        }
+
+        th,
+        td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        th {
+            background-color: #f0f0f0;
+        }
+
+        thead {
+            position: sticky;
+            top: 0;
+            background-color: #fff;
+        }
+
+    </style>
+</head>
+
+<body>
+    <h1><u>Acceso a información con PHP</u></h1>
+    <form id="formulario">
+        <select name="nombre" id="nombre">Nombre</select>
+        <button type="submit" id="buscar">Buscar</button>
+    </form>
+    <table id="tabla">
+        <thead>
+            <th>Numero</th>
+            <th>Nombre</th>
+            <th>Centro</th>
+        </thead>
+    </table>
+    <script src="acceso_bd.js"></script>
+</body>
+
+</html>
