@@ -1,45 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Acceso a Información</title>
-    <style>
-      table {
-        margin-top: 30px;
-        border-collapse: collapse;
-        width: 60%;
-      }
-      th,
-      td {
-        border: 1px solid #ddd;
-        padding: 10px;
-        text-align: center;
-        font-size: 16px;
-      }
-      th {
-        background-color: #f0f0f0;
-      }
-      thead {
-        position: sticky;
-        top: 0;
-        background-color: #fff;
-      }
-    </style>
-  </head>
-  <body>
-    <h1><u>Acceso a información con PHP</u></h1>
-    <form id="formulario">
-      <select name="tabla" id="tabla">
-        <option value="">Seleccione una tabla</option>
-        <option value="centros">Centros</option>
-        <option value="departamentos">Departamentos</option>
-        <option value="empleados">Empleados</option>
-      </select>
-      <button type="submit" id="buscar">Buscar</button>
-    </form>
-    <div id="resultados"></div>
-    <!-- Contenedor para las tablas -->
-    <script src="acceso_bd.js"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestión de Departamentos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      background-color: rgb(249, 249, 249);
+    }
+    table {
+      margin-top: 20px;
+      border-collapse: collapse;
+      width: 100%;
+    }
+    th, td {
+      border: 1px solid #706969;
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #9fa5b4;
+    }
+    form {
+      margin-bottom: 20px;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+    select, input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #62676b;
+      color: rgb(0, 0, 0);
+      border: none;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+    button:hover {
+      background-color: #587c77;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Gestión de Departamentos y Empleados</h1>
+
+  <!-- Buscar por tabla -->
+  <form id="formulario">
+    <label for="tabla">Selecciona una tabla para consultar:</label>
+    <select name="tabla" id="tabla">
+      <option value="">Seleccione una tabla</option>
+      <option value="centros">Centros</option>
+      <option value="departamentos">Departamentos</option>
+      <option value="empleados">Empleados</option>
+    </select>
+    <button type="submit" id="buscar">Buscar</button>
+  </form>
+  <div id="resultados"></div>
+
+  <!-- Añadir un nuevo departamento -->
+  <form id="form2">
+    <h2>Añadir un Nuevo Departamento</h2>
+
+    <label for="Numero">Numero:</label>
+    <select name="Numero" id="Numero"></select>
+
+    <label for="tipoCentro">Centro:</label>
+    <select name="tipoCentro" id="tipoCentro"></select>
+
+    <label for="Director">Director:</label>
+    <select name="Director" id="Director"></select>
+
+    <label for="Depto_jefe">Departamento Jefe:</label>
+    <select name="Depto_jefe" id="Depto_jefe"></select>
+
+    <label for="Presupuesto">Presupuesto:</label>
+    <input type="number" name="Presupuesto" id="Presupuesto" placeholder="Presupuesto" required>
+
+    <label for="Nombre">Nombre del Departamento:</label>
+    <input type="text" name="Nombre" id="Nombre" placeholder="Nombre" required>
+
+    <button type="submit">Añadir Departamento</button>
+  </form>
+
+  <!-- Buscar empleados por departamento -->
+  <form id="form3">
+    <h2>Buscar Empleados por Departamento</h2>
+    <label for="searchDept">Selecciona un departamento:</label>
+    <select name="searchDept" id="searchDept"></select>
+    <button type="submit">Buscar Empleados</button>
+  </form>
+  <div id="empleadosResultados"></div>
+
+  <script src="acceso_bd.js"></script>
+</body>
 </html>

@@ -4,16 +4,14 @@ const contenedorResultados = document.getElementById("resultados");
 const tablaResultados = document.createElement("table");
 
 boton_buscar.addEventListener("click", function (e) {
-  e.preventDefault(); // Evita que el formulario se envíe de la manera tradicional
+  e.preventDefault(); 
   const seleccion = select_tabla.value;
 
-  // Limpia el contenedor antes de mostrar nuevos resultados
   limpiarTabla();
 
-  // Verifica que se haya sele    ccionado una tabla
   if (seleccion) {
     fetch(
-      `http://localhost/ejercicio_accesoBD/acceso_bd.php?tabla=${seleccion}`
+      `http://localhost/Accesodatabase/acceso_bd.php?tabla=${seleccion}`
     )
       .then((response) => {
         if (response.ok) {
@@ -23,48 +21,42 @@ boton_buscar.addEventListener("click", function (e) {
       })
       .then((datos) => {
         console.log(datos);
-        // Verifica si hay datos
         if (datos.length > 0) {
-          // Crear una nueva tabla para los resultados
 
           const thead = document.createElement("thead");
           const tbody = document.createElement("tbody");
 
-          // Crear encabezados según la tabla seleccionada
-          // falta completar el codigo
           const encabezado = document.createElement("tr");
           if (seleccion === "centros") {
             encabezado.innerHTML =
               "<th>Numero</th><th>Nombre</th><th>Direccion</th>";
           } else if (seleccion === "departamentos") {
             encabezado.innerHTML =
-              "<th>Numero</th><th>Nombre</th><th>Centro</th>";
+              "<th>Numero</th><th>Centro</th><th>Director</th><th>Tipo_dir</th><th>Presupuesto</th><th>Depto_jefe</th><th>Nombre</th>";
           } else if (seleccion === "empleados") {
             encabezado.innerHTML =
-              "<th>Cod</th><th>Nombre</th><th>Telefono</th>";
+              "<th>Cod</th><th>Departamento</th><th>Telefono</th><th>Fecha_nacimiento</th><th>Fecha_ingreso</th><th>Salario</th><th>Comision</th><th>Num_hijos</th><th>Nombre</th>";
           }
           thead.appendChild(encabezado);
           tablaResultados.appendChild(thead);
 
-          // Agregar filas de datos
           datos.forEach((dato) => {
             const fila = document.createElement("tr");
 
             if (seleccion === "centros") {
               fila.innerHTML = `<td>${dato.Numero}</td><td>${dato.Nombre}</td><td>${dato.Direccion}</td>`;
             } else if (seleccion === "departamentos") {
-              fila.innerHTML = `<td>${dato.Numero}</td><td>${dato.Nombre}</td><td>${dato.Centro}</td>`;
+              fila.innerHTML = `<td>${dato.Numero}</td><td>${dato.Centro}</td><td>${dato.Director}</td><td>${dato.Tipo_dir}</td><td>${dato.Presupuesto}</td><td>${dato.Depto_jefe}</td><td>${dato.Nombre}</td>`;
             } else if (seleccion === "empleados") {
-              fila.innerHTML = `<td>${dato.Cod}</td><td>${dato.Nombre}</td><td>${dato.Telefono}</td>`;
+              fila.innerHTML = `<td>${dato.Cod}</td><td>${dato.Departamento}</td><td>${dato.Telefono}</td><td>${dato.Fecha_nacimiento}</td><td>${dato.Fecha_ingreso}</td><td>${dato.Salario}</td><td>${dato.Comision}</td><td>${dato.Num_hijos}</td><td>${dato.Nombre}</td>`;
             }
 
             tbody.appendChild(fila);
           });
 
           tablaResultados.appendChild(tbody);
-          contenedorResultados.appendChild(tablaResultados); // Agregar la tabla al contenedor
+          contenedorResultados.appendChild(tablaResultados); 
         } else {
-          // Si no hay datos, muestra un mensaje
           const mensaje = document.createElement("p");
           mensaje.textContent = "No se encontraron resultados.";
           contenedorResultados.appendChild(mensaje);
@@ -74,8 +66,7 @@ boton_buscar.addEventListener("click", function (e) {
         console.error("Error:", error);
       });
   } else {
-    alert("Por favor, selecciona una tabla.");
-  }
+    alert("Por favor, selecciona una tabla.");}
 });
 
 function limpiarTabla() {
