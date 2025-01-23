@@ -1,58 +1,85 @@
-// const form= document.getElementById('formulario');
-const select_nombre = document.getElementById("nombre");
-const tabla = document.getElementById("tabla");
+const select_tabla = document.getElementById("tabla");
 const boton_buscar = document.getElementById("buscar");
+const contenedorResultados = document.getElementById("resultados");
+const tablaResultados = document.createElement("table");
 
-fetch("http://localhost/accesodatabase/acceso_bd.php")
-  .then((response) => {
-    if (response.ok) {
-      return response.json();
-    }
-  })
-  .then((datos) => {
-    console.log(datos);
-    datos.forEach((element) => {
-      const option = document.createElement("option");
-      option.textContent = element.Nombre;
-      option.value = element.Nombre;
-      select_nombre.appendChild(option);
-    });
-    boton_buscar.addEventListener("click", function (e) {
-      e.preventDefault();
-      const seleccion = select_nombre.value;
-      console.log(seleccion);
+boton_buscar.addEventListener("click", function (e) {
+  e.preventDefault(); // Evita que el formulario se envíe de la manera tradicional
+  const seleccion = select_tabla.value;
 
-      limpiarTabla();
+  // Limpia el contenedor antes de mostrar nuevos resultados
+  limpiarTabla();
 
+  // Verifica que se haya sele    ccionado una tabla
+  if (seleccion) {
+    fetch(
+      `http://localhost/ejercicio_accesoBD/acceso_bd.php?tabla=${seleccion}`
+    )
+      .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error("Error en la respuesta de la red");
+      })
+      .then((datos) => {
+        console.log(datos);
+        // Verifica si hay datos
+        if (datos.length > 0) {
+          // Crear una nueva tabla para los resultados
 
-      const filtrado = datos.filter(
-        (departamentos) => departamentos.Nombre === seleccion);
-      
-      filtrado.forEach((dato) => {
-        const fila = document.createElement("tr");
+          const thead = document.createElement("thead");
+          const tbody = document.createElement("tbody");
 
-        const celdaNumero = document.createElement("td");
-        celdaNumero.textContent = dato.Numero;
-        fila.appendChild(celdaNumero);
+          // Crear encabezados según la tabla seleccionada
+          // falta completar el codigo
+          const encabezado = document.createElement("tr");
+          if (seleccion === "centros") {
+            encabezado.innerHTML =
+              "<th>Numero</th><th>Nombre</th><th>Direccion</th>";
+          } else if (seleccion === "departamentos") {
+            encabezado.innerHTML =
+              "<th>Numero</th><th>Nombre</th><th>Centro</th>";
+          } else if (seleccion === "empleados") {
+            encabezado.innerHTML =
+              "<th>Cod</th><th>Nombre</th><th>Telefono</th>";
+          }
+          thead.appendChild(encabezado);
+          tablaResultados.appendChild(thead);
 
-        const celdaNombre = document.createElement("td");
-        celdaNombre.textContent = dato.Nombre;
-        fila.appendChild(celdaNombre);
+          // Agregar filas de datos
+          datos.forEach((dato) => {
+            const fila = document.createElement("tr");
 
-        const celdaCentro = document.createElement("td");
-        celdaCentro.textContent = dato.Centro;
-        fila.appendChild(celdaCentro);
+            if (seleccion === "centros") {
+              fila.innerHTML = `<td>${dato.Numero}</td><td>${dato.Nombre}</td><td>${dato.Direccion}</td>`;
+            } else if (seleccion === "departamentos") {
+              fila.innerHTML = `<td>${dato.Numero}</td><td>${dato.Nombre}</td><td>${dato.Centro}</td>`;
+            } else if (seleccion === "empleados") {
+              fila.innerHTML = `<td>${dato.Cod}</td><td>${dato.Nombre}</td><td>${dato.Telefono}</td>`;
+            }
 
-        tabla.appendChild(fila);
+            tbody.appendChild(fila);
+          });
+
+          tablaResultados.appendChild(tbody);
+          contenedorResultados.appendChild(tablaResultados); // Agregar la tabla al contenedor
+        } else {
+          // Si no hay datos, muestra un mensaje
+          const mensaje = document.createElement("p");
+          mensaje.textContent = "No se encontraron resultados.";
+          contenedorResultados.appendChild(mensaje);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
       });
-    })
-  });
-
-  function limpiarTabla() {
-    const tabla = document.getElementById("tabla");
-    while (tabla.rows.length > 1) {
-      tabla.deleteRow(1);
-    }
+  } else {
+    alert("Por favor, selecciona una tabla.");
   }
+});
 
-  
+function limpiarTabla() {
+  while (tablaResultados.rows.length > 0) {
+    tablaResultados.deleteRow(0);
+  }
+}

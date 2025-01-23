@@ -1,52 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Acceso a Información</title>
     <style>
-        table {
-            margin-top: 30px;
-            border-collapse: collapse;
-            width: 60%;
-        }
-
-        th,
-        td {
-            border: 1px solid #ddd;
-            padding: 10px;
-            text-align: center;
-            font-size: 16px;
-        }
-
-        th {
-            background-color: #f0f0f0;
-        }
-
-        thead {
-            position: sticky;
-            top: 0;
-            background-color: #fff;
-        }
-
+      table {
+        margin-top: 30px;
+        border-collapse: collapse;
+        width: 60%;
+      }
+      th,
+      td {
+        border: 1px solid #ddd;
+        padding: 10px;
+        text-align: center;
+        font-size: 16px;
+      }
+      th {
+        background-color: #f0f0f0;
+      }
+      thead {
+        position: sticky;
+        top: 0;
+        background-color: #fff;
+      }
     </style>
-</head>
-
-<body>
+  </head>
+  <body>
     <h1><u>Acceso a información con PHP</u></h1>
     <form id="formulario">
-        <select name="nombre" id="nombre">Nombre</select>
-        <button type="submit" id="buscar">Buscar</button>
+      <select name="tabla" id="tabla">
+        <option value="">Seleccione una tabla</option>
+        <option value="centros">Centros</option>
+        <option value="departamentos">Departamentos</option>
+        <option value="empleados">Empleados</option>
+      </select>
+      <button type="submit" id="buscar">Buscar</button>
     </form>
-    <table id="tabla">
-        <thead>
-            <th>Numero</th>
-            <th>Nombre</th>
-            <th>Centro</th>
-        </thead>
-    </table>
+    <div id="resultados"></div>
+    <!-- Contenedor para las tablas -->
     <script src="acceso_bd.js"></script>
-</body>
-
+  </body>
 </html>
