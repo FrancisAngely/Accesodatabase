@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Gestión de Departamentos</title>
   <style>
     body {
@@ -10,33 +11,43 @@
       margin: 20px;
       background-color: rgb(249, 249, 249);
     }
+
     table {
       margin-top: 20px;
       border-collapse: collapse;
       width: 100%;
     }
-    th, td {
+
+    th,
+    td {
       border: 1px solid #706969;
+
       padding: 10px;
       text-align: center;
     }
+
     th {
       background-color: #9fa5b4;
     }
+
     form {
       margin-bottom: 20px;
     }
+
     label {
       display: block;
       margin-top: 10px;
       font-weight: bold;
     }
-    select, input {
+
+    select,
+    input {
       width: 100%;
       padding: 8px;
       margin-top: 5px;
       box-sizing: border-box;
     }
+
     button {
       padding: 10px 15px;
       background-color: #62676b;
@@ -45,13 +56,14 @@
       cursor: pointer;
       margin-top: 10px;
     }
+
     button:hover {
       background-color: #587c77;
     }
   </style>
 </head>
-<body>
 
+<body>
   <h1>Gestión de Departamentos y Empleados</h1>
 
   <!-- Buscar por tabla -->
@@ -72,7 +84,7 @@
     <h2>Añadir un Nuevo Departamento</h2>
 
     <label for="Numero">Numero:</label>
-    <select name="Numero" id="Numero"></select>
+    <input name="Numero" id="Numero"></input>
 
     <label for="tipoCentro">Centro:</label>
     <select name="tipoCentro" id="tipoCentro"></select>
@@ -80,14 +92,17 @@
     <label for="Director">Director:</label>
     <select name="Director" id="Director"></select>
 
+    <label for="Tipo_dir">Tipo Direccion:</label>
+    <select name="Tipo_dir" id="Tipo_dir"></select>
+
     <label for="Depto_jefe">Departamento Jefe:</label>
     <select name="Depto_jefe" id="Depto_jefe"></select>
 
     <label for="Presupuesto">Presupuesto:</label>
-    <input type="number" name="Presupuesto" id="Presupuesto" placeholder="Presupuesto" required>
+    <input type="number" name="Presupuesto" id="Presupuesto" placeholder="Presupuesto" required />
 
-    <label for="Nombre">Nombre del Departamento:</label>
-    <input type="text" name="Nombre" id="Nombre" placeholder="Nombre" required>
+    <label for="Nombre">Nombre:</label>
+    <input name="Nombre" id="Nombre"></input>
 
     <button type="submit">Añadir Departamento</button>
   </form>
@@ -103,4 +118,5 @@
 
   <script src="acceso_bd.js"></script>
 </body>
+
 </html>
