@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const datosFormulario = new FormData(formularioDepartamento);
     datosFormulario.append("accion", "add_department");
 
-    fetch("http://localhost/Accesodatabase/acceso_bd.php", {
+    fetch("http://localhost/prueba1/acceso_bd.php", {
       method: "POST",
       body: datosFormulario,
     })
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const deptId = document.getElementById("searchDept").value;
 
     if (deptId) {
-      fetch("http://localhost/Accesodatabase/acceso_bd.php", {
+      fetch("http://localhost/prueba1/acceso_bd.php", {
         method: "POST",
         body: new URLSearchParams({
           accion: "search_employees",
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Función para cargar desplegables dinámicos
   function cargarDesplegables() {
-    fetch("http://localhost/Accesodatabase/acceso_bd.php?tabla=centros")
+    fetch("http://localhost/prueba1/acceso_bd.php?tabla=centros")
       .then((response) => response.json())
       .then((centros) => {
         const centroSelect = document.getElementById("tipoCentro");
@@ -91,16 +91,11 @@ document.addEventListener("DOMContentLoaded", function () {
           .join("");
       });
 
-    fetch("http://localhost/Accesodatabase/acceso_bd.php?tabla=empleados")
+    fetch("http://localhost/prueba1/acceso_bd.php?tabla=empleados")
       .then((response) => response.json())
       .then((empleados) => {
         const directorSelect = document.getElementById("Director");
-        const directores = empleados.filter(
-          (empleado) =>
-            empleado.Departamento === 100 || empleado.Departamento === 110
-        );
-
-        directorSelect.innerHTML = directores
+        directorSelect.innerHTML = empleados
           .map(
             (director) =>
               `<option value="${director.Cod}">${director.Nombre}</option>`
@@ -108,21 +103,22 @@ document.addEventListener("DOMContentLoaded", function () {
           .join("");
       });
 
-    fetch("http://localhost/Accesodatabase/acceso_bd.php?tabla=departamentos")
+    fetch("http://localhost/prueba1/acceso_bd.php?tabla=departamentos")
       .then((response) => response.json())
       .then((departamentos) => {
         const deptoTipo_dirSelect = document.getElementById("Tipo_dir");
 
-        const tipoDirector = departamentos.filter(
-          (departamento) =>
-            departamento.Numero === "NULL" || departamento.Numero === 110
-        );
-        const opciones = tipoDirector
-          .map(
-            (dept) =>
-              `<option value="${dept.Tipo_dir}">${dept.Tipo_dir}</option>`
-          )
+        const uniqueTipos = new Set();
+        departamentos.forEach((dept) => {
+          if (dept.Numero && (dept.Tipo_dir === "P" || dept.Tipo_dir === "F")) {
+            uniqueTipos.add(dept.Tipo_dir);
+          }
+        });
+
+        const opciones = Array.from(uniqueTipos)
+          .map((tipo) => `<option value="${tipo}">${tipo}</option>`)
           .join("");
+
         deptoTipo_dirSelect.innerHTML = opciones;
 
         const numeroDepartamento = document.getElementById("Numero");
@@ -133,14 +129,16 @@ document.addEventListener("DOMContentLoaded", function () {
         const deptoSelect = document.getElementById("Depto_jefe");
 
         const dptojefe = departamentos.filter(
-          (departamento) =>
-            departamento.Numero === 100 || departamento.Numero === 110
+          (departamento) => departamento.Numero
         );
-        const opciones1 = dptojefe
-          .map(
-            (dept) =>
-              `<option value="${dept.Depto_jefe}">${dept.Depto_jefe}</option>`
-          )
+
+        const uniqueDeptoJefe = new Set();
+        dptojefe.forEach((dept) => {
+          uniqueDeptoJefe.add(dept.Depto_jefe);
+        });
+
+        const opciones1 = Array.from(uniqueDeptoJefe)
+          .map((num) => `<option value="${num}">${num}</option>`)
           .join("");
         deptoSelect.innerHTML = opciones1;
 
@@ -159,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Función para buscar datos de tablas
   function buscarTabla(tabla) {
     limpiarResultados();
-    fetch(`http://localhost/Accesodatabase/acceso_bd.php?tabla=${tabla}`)
+    fetch(`http://localhost/prueba1/acceso_bd.php?tabla=${tabla}`)
       .then((response) => response.json())
       .then((datos) => {
         if (datos.length > 0) {
